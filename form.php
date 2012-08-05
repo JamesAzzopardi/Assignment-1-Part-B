@@ -9,13 +9,16 @@
 
   		<form action="query.php" method="GET">
 			<table>
-				<tr><td><input type="checkbox" name="option" value="option1" /></td><td>Wine Name:</td><td><input type="text" name="wineName" /></td></tr>
-				<tr><td><input type="checkbox" name="option" value="option2" /></td><td>Winery Name:</td><td><input type="text" name="wineryname" /></td></tr>	
-				<tr><input type="submit" value="Show wines"></tr>			
+				<tr><td>Wine Name:</td><td><input type="text" name="wineName" /></td></tr>
+				<tr><td>Winery Name:</td><td><input type="text" name="wineryName" /></td></tr>	
+				<br />
+				<tr><td></td><td><input type="submit" value="Show Wines"><td></tr>			
 			</table>
 		</form>
 
 	</body>
 </html>	
+
+
 
 
