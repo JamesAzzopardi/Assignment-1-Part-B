@@ -15,21 +15,31 @@
 			
 			// get the user data
 			$wineName = $_GET['wineName'];
+			$wineryName = $_GET['wineryName'];
+			$regionName = $_GET['region_name'];
+			$grapeVariety = $_GET['variety'];
 			
 			// Connect to the MySQL server
 			if (!($connection = @ mysql_connect(DB_HOST, DB_USER, DB_PW))) {
 				die("Could not connect");
 			}	
 			mysql_select_db("winestore", $connection);
-			$query = "SELECT wine_name, winery_name
-				FROM wine, winery
-				WHERE wine.winery_id = winery.winery_id";
+			$query = "SELECT wine_name, winery_name, region_name
+				FROM wine, winery, region
+				WHERE wine.winery_id = winery.winery_id AND winery.region_id = region.region_id";
 			
 			
 			if (isset($wineName) && $wineName != "") {
-			$query .= " AND wine_name = '{$wineName}' ";
+			$query .= " AND wine_name LIKE '%{$wineName}%' ";
 			} 
 			
+			if (isset($wineryName) && $wineryName != "") {
+			$query .= " AND winery_name LIKE '%{$wineryName}%' ";
+			} 
+			
+			if (isset($regionName) && $regionName != "All") {
+			$query .= " AND region_name = '{$regionName}' ";
+			} 
 			function displayWines($connection, $query) {
 			
 			// Run the query on the server
@@ -44,13 +54,15 @@
 			  // and start a <table>.
 			  print "\n<table>\n<tr>" .
 				  "\n\t<th>Wine Name</th>" .
-				  "\n\t<th>Winery</th></tr>" ;
+				  "\n\t<th>Winery</th>" .
+				  "\n\t<th>Region</th></tr>" ;
 
 			  // Fetch each of the query rows
 			  while ($row = @ mysql_fetch_array($result)) {
 				// Print one row of results
 				print "\n<tr>\n\t<td>{$row["wine_name"]}</td>" .
-					"\n\t<td>{$row["winery_name"]}</td>\n</tr>";
+					"\n\t<td>{$row["winery_name"]}</td>\n" .
+					"\n\t<td>{$row["region_name"]}</td>\n</tr>";
 			  } // end while loop body
 
 			  // Finish the <table>
